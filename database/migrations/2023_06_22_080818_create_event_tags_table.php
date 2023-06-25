@@ -12,20 +12,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('event_tags', function (Blueprint $table) {
-            $table->id();
+            $table->id()->unique()->index();;
             $table->string('slug');
             $table->string('tittle');
             $table->string('subtittle')->nullable();
             $table->string('type')->default('Others')->nullable();
             $table->string('website')->nullable();
-            $table->text('description')->nullable();
+            $table->longText('description')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('facebook')->nullable();
             $table->string('instagram')->nullable();
             $table->string('twitter')->nullable();
             $table->string('linkedin')->nullable();
-            $table->string('images')->default('no_image.jpg');
+            $table->string('images')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

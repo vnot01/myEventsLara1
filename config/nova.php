@@ -59,7 +59,7 @@ return [
     |
     */
 
-    'path' => '/nova',
+    'path' => '/admin',
 
     /*
     |--------------------------------------------------------------------------
@@ -104,6 +104,7 @@ return [
         DispatchServingNovaEvent::class,
         BootTools::class,
         \Vyuldashev\NovaPermission\ForgetCachedPermissions::class,
+
     ],
 
     'api_middleware' => [
@@ -164,7 +165,8 @@ return [
     */
 
     // 'brand' => [
-    //     'logo' => resource_path('/img/example-logo.svg'),
+    //     // 'logo' => resource_path('/images/logo.png'),
+    //     'logo' => resource_path('/img/logo2.svg'),
 
     //     'colors' => [
     //         "400" => "24, 182, 155, 0.5",

@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Models\Event;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -13,6 +14,7 @@ use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\Place;
 use Laravel\Nova\Fields\Country;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Venue extends Resource
@@ -63,15 +65,15 @@ class Venue extends Resource
             Markdown::make('Description')
             ->showOnPreview(),
             Text::make('Venue Type','type')
-            ->showOnPreview(),
+            ->showOnPreview()->hideFromIndex(),
             Markdown::make('Address')
             ->showOnPreview(),
             Place::make('City'),
-            Text::make('State'),
-            Country::make('Country','country_code'),
-            Text::make('Zip Code','zipcode'),
-            Text::make('Latitude'),
-            Text::make('Longitude'),
+            Text::make('State')->hideFromIndex(),
+            Country::make('Country','country_code')->hideFromIndex(),
+            Text::make('Zip Code','zipcode')->hideFromIndex(),
+            Text::make('Latitude')->hideFromIndex(),
+            Text::make('Longitude')->hideFromIndex(),
             Image::make('Images')
             ->disk('public')
             ->path('images/venues')
@@ -85,6 +87,8 @@ class Venue extends Resource
             // Image::make('Thumb'),
             Boolean::make('Status','status')
             ->showOnPreview(),
+
+            HasMany::make('Events')
         ];
     }
 

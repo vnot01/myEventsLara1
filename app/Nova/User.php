@@ -9,10 +9,25 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Fields\MorphToMany;
+use Vyuldashev\NovaPermission\PermissionBooleanGroup;
+use Vyuldashev\NovaPermission\RoleBooleanGroup;
 
 class User extends Resource
 {
+
+    public static $permissionsForAbilities = [
+    //   'all' => 'manage users',
+    //   'viewAny' => 'view products',
+      'view' => 'view users',
+    //   'create' => 'create products',
+    //   'update' => 'update products',
+    //   'delete' => 'delete products',
+    //   'restore' => 'restore products',
+    //   'forceDelete' => 'forceDelete products',
+    //   'addAttribute' => 'add product attributes',
+    //   'attachAttribute' => 'attach product attributes',
+    //   'detachAttribute' => 'detach product attributes',
+    ];
     /**
      * The model the resource corresponds to.
      *
@@ -63,9 +78,8 @@ class User extends Resource
                 ->onlyOnForms()
                 ->creationRules('required', Rules\Password::defaults())
                 ->updateRules('nullable', Rules\Password::defaults()),
-            MorphToMany::make('Roles', 'roles', \Vyuldashev\NovaPermission\Role::class),
-            MorphToMany::make('Permissions', 'permissions', \Vyuldashev\NovaPermission\Permission::class),
-
+                RoleBooleanGroup::make('Roles'),
+                PermissionBooleanGroup::make('Permissions'),
         ];
     }
 

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('events', function (Blueprint $table) {
-            $table->id();
+            $table->id()->unique()->index();;
             $table->string('tittle');
             $table->longText('description')->nullable();
             $table->text('faq')->nullable();
@@ -20,9 +20,8 @@ return new class extends Migration
             $table->string('poster')->nullable();
             $table->string('images')->nullable();
             $table->string('video_link')->nullable();
-            $table->unsignedBigInteger('venues_id')->default(1);
-            $table->date('start_date')->nullable();
-            $table->date('end_date')->nullable();
+            $table->dateTime('start_date', $precision = 0)->nullable();
+            $table->dateTime('end_date', $precision = 0)->nullable();
             $table->time('start_time', $precision = 0)->nullable();
             $table->time('end_time', $precision = 0)->nullable();
             $table->string('repetitive')->nullable();
@@ -53,6 +52,7 @@ return new class extends Migration
             $table->unsignedBigInteger('currency_id')->default(1);
             $table->timestamps();
         });
+
     }
 
     /**

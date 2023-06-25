@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('venues', function (Blueprint $table) {
-            $table->id();
+            $table->id()->unique()->index();
             $table->string('tittle');
             $table->string('slug');
-            $table->string('description')->nullable();
-            $table->string('type')->default('Others');
+            $table->longText('description')->nullable();
+            $table->string('type')->default('Others')->nullable();
             $table->text('address')->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('zipcode')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
-            $table->string('images')->default('no_image.jpg');
+            $table->string('images')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
