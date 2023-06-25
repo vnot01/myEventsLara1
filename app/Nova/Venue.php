@@ -19,6 +19,16 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Venue extends Resource
 {
+
+    public static function redirectAfterCreate(NovaRequest $request, $resource)
+    {
+        return '/resources/'.static::uriKey();
+    }
+
+    public static function redirectAfterUpdate(NovaRequest $request, $resource)
+    {
+        return '/resources/'.static::uriKey();
+    }
     /**
      * The model the resource corresponds to.
      *
