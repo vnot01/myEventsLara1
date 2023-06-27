@@ -17,11 +17,7 @@ class Venue extends Model
     //     return $this->hasManyThrough(Venue::class, Event::class);
     // }
 
-    // public function events(){
-    //     return $this->belongsToMany(Event::class,'events','event_id');
-    // }
     public function events(){
-        return $this->hasMany(Event::class,'venue_id');
+        return $this->hasMany(Event::class);
     }
-    
 }

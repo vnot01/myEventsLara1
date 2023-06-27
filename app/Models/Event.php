@@ -22,24 +22,8 @@ class Event extends Model
     //     return $this->hasManyThrough(Venue::class, Event::class);
     // }
 
-    // public function venues(){
-    //     return $this->belongsTo(Venue::class,'venue_id', 'id');
-    // }
-
-    // public function tickets(){
-    //     return $this->hasMany(Ticket::class);
-    // }
-
-    // public function belongsVenueToManyTicket(){
-    //     return $this->belongsToMany(Venue::class, Ticket::class);
-    // }
-
-    public function tickets() {
-        return $this->hasMany(Ticket::class);
-    }
-
-    public function venues() {
-        return $this->belongsTo(Venue::class,'venue_id','id');
+    public function venues(){
+        return $this->belongsTo(Venue::class,'venue_id', 'id');
     }
 
     protected $casts = [

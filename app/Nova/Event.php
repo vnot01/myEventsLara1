@@ -14,10 +14,7 @@ use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\Place;
 use Laravel\Nova\Fields\Country;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\HasManyThrough;
-
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\DateTime;
 use Illuminate\Database\Eloquent\Builder;
@@ -95,7 +92,7 @@ class Event extends Resource
      */
     public static function searchableColumns()
     {
-        return ['tittle', new SearchableRelation('tickets', 'id','venues','venue_id','ticket_id')];
+        return ['id', new SearchableRelation('venues', 'tittle')];
     }
 
     /**
@@ -104,7 +101,7 @@ class Event extends Resource
      * @var array
      */
     public static $search = [
-        'slug','tickets','tittle','venues',
+        'id','slug','tittle','venues',
     ];
     /**
      * The visual style used for the table. Available options are 'tight' and 'default'.
@@ -140,7 +137,7 @@ class Event extends Resource
                 ->sortable(),
             Text::make('Event Tittle', 'tittle')
             ->rules('required')
-            ->updateRules('required','unique:events,{{resourceId}}')
+            ->updateRules('required','unique:events,tittle,{{resourceId}}')
             ->creationRules('unique:events,tittle,{{resourceId}}')
             ->sortable()->showOnPreview()
             ->help('Type your Event Tittle'),
@@ -177,14 +174,9 @@ class Event extends Resource
             // Select::make("Venues")
             // ->relationship("venues",Venue::class)->searchable()->preload(),
 
-            // HasMany::make('Venues','venues',Venue::class)
-            //     ->sortable()->searchable()->showOnPreview()
-            //     ->help('Search the Venues'),
-
-            BelongsTo::make('Venues','venues',Venue::class)
+            belongsTo::make('Venues','venues',Venue::class)
                 ->sortable()->searchable()->showOnPreview()
                 ->help('Search the Venues'),
-
             DateTime::make('Start Date', 'start_date')
             ->sortable()->showOnPreview()
             ->displayUsing(fn ($value) => $value ? $value->format('d/m/Y, g:ia') : ''),
@@ -199,8 +191,6 @@ class Event extends Resource
             ->falseValue('0')
             ->withMeta(['value' => $this->status ?? true])
             ->showOnPreview(),
-
-            HasMany::make('Tickets'),
         ];
     }
 
